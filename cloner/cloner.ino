@@ -18,9 +18,8 @@ void setup() {
   device.PCD_Init(); // Init MFRC522 
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, LOW);
-//  Serial.println(F("This code scan the MIFARE Classsic NUID."));
-//  Serial.print(F("Using the following key:"));
-//  printHex(key.keyByte, MFRC522::MF_KEY_SIZE);  
+  Serial.println(F("This code scan the MIFARE Classsic NUID."));
+
 }
 
 void loop() {
@@ -49,7 +48,7 @@ void loop() {
   // Write to new card
   if(strcmp(uid.uidByte, device.uid.uidByte) == 0){
      Serial.println(F("Same card UID presented."));
-     return;  
+     return;
   }
 
   if( device.MIFARE_SetUid(uid.uidByte, uid.size, true)){
@@ -59,13 +58,13 @@ void loop() {
     return; 
   }
 
-  Serial.println(F("Error: Writing to new card. Try again."));
+  Serial.println(F("Error writing to new card. Try again."));
 }
 
 
-void printHex(byte *buffer, byte bufferSize) {
+void printHex(byte *buf, byte bufferSize) {
   for (byte i = 0; i < bufferSize; i++) {
-    Serial.print(buffer[i] < 0x10 ? " 0" : " ");
-    Serial.print(buffer[i], HEX);
+    Serial.print(buf[i] < 0x10 ? " 0" : " ");
+    Serial.print(buf[i], HEX);
   }
 }
